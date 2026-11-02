@@ -7,7 +7,7 @@ permissions:
 
 jobs:
   ci:
-    name: "CI à compléter"
+    name: "CI complète"
     runs-on: "ubuntu-latest"
     timeout-minutes: 5
     steps:
@@ -16,4 +16,22 @@ jobs:
         with:
           persist-credentials: false
 
-      # À compléter pendant le TD : environnement, dépendances et vérifications.
+      - name: "Installer Python"
+        uses: "actions/setup-python@v5"
+        with:
+          python-version: "3.10"
+
+      - name: "Installer l'outil uv"
+        uses: "astral-sh/setup-uv@v5"
+
+      - name: "Vérifier le formatage du code (Format)"
+        run: |
+          uv run ruff format --check .
+
+      - name: "Vérifier la qualité du code (Lint)"
+        run: |
+          uv run ruff check .
+
+      - name: "Exécuter les tests unitaires"
+        run: |
+          uv run pytest tests/unit -v

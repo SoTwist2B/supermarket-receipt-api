@@ -3,10 +3,10 @@
 import pytest
 
 from supermarket_receipt_api.checkout import (
-    validate_quantity,
     line_subtotal_cents,
-    three_for_two_discount_cents,
     percentage_discount_cents,
+    three_for_two_discount_cents,
+    validate_quantity,
 )
 
 
@@ -25,6 +25,7 @@ def test_validate_quantity_value_error(invalid_value: int) -> None:
 def test_validate_quantity_type_error(invalid_type: object) -> None:
     with pytest.raises(TypeError):
         validate_quantity(invalid_type)  # type: ignore
+
 
 @pytest.mark.parametrize(
     "unit_price_cents, quantity, unit, expected",
@@ -53,11 +54,11 @@ def test_line_subtotal_errors() -> None:
 @pytest.mark.parametrize(
     "unit_price_cents, quantity, expected_discount",
     [
-        (99, 1, 0),   # Moins de 3 : pas de réduction
-        (99, 2, 0),   # Moins de 3 : pas de réduction
+        (99, 1, 0),  # Moins de 3 : pas de réduction
+        (99, 2, 0),  # Moins de 3 : pas de réduction
         (99, 3, 99),  # Exactement 3 : 1 article offert (99c) -> Test clé du bug corrigé
         (99, 4, 99),  # 4 pièces : 1 article offert
-        (99, 6, 198), # 6 pièces : 2 articles offerts
+        (99, 6, 198),  # 6 pièces : 2 articles offerts
     ],
 )
 def test_three_for_two_discount_nominal(

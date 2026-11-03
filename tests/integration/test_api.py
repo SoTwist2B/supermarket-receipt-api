@@ -1,6 +1,7 @@
 # ruff: noqa: I001
-from fastapi.testclient import TestClient
 from supermarket_receipt_api.main import app
+from fastapi.testclient import TestClient
+
 
 client = TestClient(app)
 

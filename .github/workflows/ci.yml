@@ -24,13 +24,8 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: "Installer Python"
-        uses: "actions/setup-python@v5"
-        with:
-          python-version: "3.10"
-
-      - name: "Installer l'outil uv"
-        uses: "astral-sh/setup-uv@v5"
+      - name: "Préparer l'environnement"
+        uses: ./.github/actions/preparer
 
       - name: "Vérifier le formatage du code"
         run: |
@@ -46,13 +41,8 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: "Installer Python"
-        uses: "actions/setup-python@v5"
-        with:
-          python-version: "3.10"
-
-      - name: "Installer l'outil uv"
-        uses: "astral-sh/setup-uv@v5"
+      - name: "Préparer l'environnement"
+        uses: ./.github/actions/preparer
 
       - name: "Vérifier la qualité du code"
         run: |
@@ -68,13 +58,8 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: "Installer Python"
-        uses: "actions/setup-python@v5"
-        with:
-          python-version: "3.10"
-
-      - name: "Installer l'outil uv"
-        uses: "astral-sh/setup-uv@v5"
+      - name: "Préparer l'environnement"
+        uses: ./.github/actions/preparer
 
       - name: "Exécuter les tests avec couverture HTML"
         run: |
@@ -102,13 +87,8 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: "Installer Python"
-        uses: "actions/setup-python@v5"
-        with:
-          python-version: "3.10"
-
-      - name: "Installer l'outil uv"
-        uses: "astral-sh/setup-uv@v5"
+      - name: "Préparer l'environnement"
+        uses: ./.github/actions/preparer
 
       - name: "Construire le paquet"
         run: |

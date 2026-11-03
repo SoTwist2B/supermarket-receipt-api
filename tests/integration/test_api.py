@@ -12,9 +12,7 @@ def test_read_root():
 
 def test_checkout_endpoint_structure():
     """Test d'intégration basique pour l'endpoint de checkout (cas nominal)."""
-    payload = {
-        "items": []
-    }
+    payload = {"items": []}
     response = client.post("/checkout", json=payload)
     assert response.status_code in [200, 201, 422]
 
@@ -26,7 +24,7 @@ def test_checkout_invalid_payload():
         "items": "ceci_nest_pas_une_liste"  # Attendu : une liste d'articles
     }
     response = client.post("/checkout", json=payload)
-    
+
     # FastAPI/Pydantic doit refuser la requête avec une erreur de validation (422)
     assert response.status_code == 422
 

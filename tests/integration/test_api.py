@@ -1,5 +1,4 @@
 from fastapi.testclient import TestClient
-import pytest
 
 from supermarket_receipt_api.main import app
 
@@ -21,20 +20,15 @@ def test_checkout_endpoint_structure():
 
 def test_checkout_invalid_payload():
     """Vérifie que l'API rejette (refuse) proprement un payload invalide ou mal structuré."""
-    # Envoi de données incorrectes par rapport aux schémas attendus
     payload = {
         "items": "ceci_nest_pas_une_liste"  # Attendu : une liste d'articles
     }
     response = client.post("/checkout", json=payload)
-
-    # FastAPI/Pydantic doit refuser la requête avec une erreur de validation (422)
     assert response.status_code == 422
 
 
 def test_checkout_missing_required_fields():
     """Vérifie le refus lorsqu'il manque des champs obligatoires."""
-    payload = {
-        # Champ "items" complètement absent
-    }
+    payload = {}
     response = client.post("/checkout", json=payload)
     assert response.status_code == 422

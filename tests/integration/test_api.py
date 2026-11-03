@@ -1,4 +1,5 @@
 from fastapi.testclient import TestClient
+import pytest
 
 from supermarket_receipt_api.main import app
 

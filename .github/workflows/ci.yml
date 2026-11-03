@@ -14,8 +14,8 @@ permissions:
   contents: "read"
 
 jobs:
-  validate-and-test:
-    name: "Validation, Linting et Tests"
+  format:
+    name: "Format"
     runs-on: "ubuntu-latest"
     timeout-minutes: 5
     steps:
@@ -32,14 +32,50 @@ jobs:
       - name: "Installer l'outil uv"
         uses: "astral-sh/setup-uv@v5"
 
-      - name: "Vérifier le formatage du code (Format)"
+      - name: "Vérifier le formatage du code"
         run: |
           uv run ruff format --check .
 
-      - name: "Vérifier la qualité du code (Lint)"
-        run: |
-          uv run ruff check . --ignore I001
+  lint:
+    name: "Lint"
+    runs-on: "ubuntu-latest"
+    timeout-minutes: 5
+    steps:
+      - name: "Récupérer le code"
+        uses: "actions/checkout@v4"
+        with:
+          persist-credentials: false
 
-      - name: "Exécuter les tests unitaires et d'intégration"
+      - name: "Installer Python"
+        uses: "actions/setup-python@v5"
+        with:
+          python-version: "3.10"
+
+      - name: "Installer l'outil uv"
+        uses: "astral-sh/setup-uv@v5"
+
+      - name: "Vérifier la qualité du code"
+        run: |
+          uv run ruff check .
+
+  test:
+    name: "Tests"
+    runs-on: "ubuntu-latest"
+    timeout-minutes: 5
+    steps:
+      - name: "Récupérer le code"
+        uses: "actions/checkout@v4"
+        with:
+          persist-credentials: false
+
+      - name: "Installer Python"
+        uses: "actions/setup-python@v5"
+        with:
+          python-version: "3.10"
+
+      - name: "Installer l'outil uv"
+        uses: "astral-sh/setup-uv@v5"
+
+      - name: "Exécuter les tests"
         run: |
           uv run pytest tests/unit tests/integration -v --durations=0

@@ -89,3 +89,32 @@ jobs:
             .pytest_cache/
             junit.xml
           if-no-files-found: ignore
+
+  build:
+    name: "Build"
+    needs: [format, lint]
+    runs-on: "ubuntu-latest"
+    timeout-minutes: 5
+    steps:
+      - name: "Récupérer le code"
+        uses: "actions/checkout@v4"
+        with:
+          persist-credentials: false
+
+      - name: "Installer Python"
+        uses: "actions/setup-python@v5"
+        with:
+          python-version: "3.10"
+
+      - name: "Installer l'outil uv"
+        uses: "astral-sh/setup-uv@v5"
+
+      - name: "Construire le paquet"
+        run: |
+          uv build
+
+      - name: "Uploader les artefacts de build"
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-dist
+          path: dist/

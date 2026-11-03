@@ -5,10 +5,14 @@ on:
     branches:
       - main
       - feature/integration-tests
+    paths-ignore:
+      - '**/*.md'
   pull_request:
     branches:
       - main
       - feature/integration-tests
+    paths-ignore:
+      - '**/*.md'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
